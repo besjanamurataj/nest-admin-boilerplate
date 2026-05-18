@@ -26,10 +26,12 @@ import { AuthService } from './auth.service';
 import { GetUsersQueryDto } from './dtos/get-user.dto';
 import { ChangePasswordDto } from './dtos/change-password.dto';
 import { Public } from 'src/shared/decoratores/public.decorator';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('users')
 @Serialize(UserDto)
 @UseInterceptors(Serialize)
+@UseGuards(AuthGuard)
 export class UsersController {
   constructor(
     private usersService: UsersService,
