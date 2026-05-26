@@ -1,4 +1,5 @@
-import { Exclude, Expose } from 'class-transformer';
+import { Exclude, Expose, Transform, Type } from 'class-transformer';
+import { IsDate } from 'class-validator';
 import { User } from 'src/users/user.entity';
 import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -18,8 +19,10 @@ export class UserInfo {
   gender?: string;
 
   @Expose()
-  @Column({ nullable: true })
-  birthDate?: string;
+  @Type(() => Date)
+  @IsDate()
+  @Column({ type: 'date', nullable: true })
+  birthDate?: Date;
 
   @Expose()
   @Column({ nullable: true })

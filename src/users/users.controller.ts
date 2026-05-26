@@ -27,6 +27,7 @@ import { GetUsersQueryDto } from './dtos/get-user.dto';
 import { ChangePasswordDto } from './dtos/change-password.dto';
 import { Public } from 'src/shared/decoratores/public.decorator';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { BatchService } from 'src/batch/batch.service';
 
 @Controller('users')
 @Serialize(UserDto)
@@ -36,6 +37,7 @@ export class UsersController {
   constructor(
     private usersService: UsersService,
     private authService: AuthService,
+    private batchService: BatchService,
   ) {}
 
   @Post('/signup')
@@ -44,6 +46,8 @@ export class UsersController {
     const user = await this.authService.signup(body);
     return user;
   }
+
+
 
   @Public()
   @Post()

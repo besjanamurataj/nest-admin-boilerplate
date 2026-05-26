@@ -14,6 +14,8 @@ import { UserInfo } from './userInfo/userInfo.entity';
 import { AuthorityModule } from './authority/authorities.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './guards/auth.guard';
+import { BullModule } from '@nestjs/bull';
+import { BatchModule } from './batch/batch.module';
 
 @Module({
   imports: [
@@ -21,8 +23,14 @@ import { AuthGuard } from './guards/auth.guard';
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
+    BullModule.forRoot({
+      redis: {
+        host: 'localhost',
+        port: 6379,
+      },
+    }),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
+      imports: [ConfigModule,BatchModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
         return {
@@ -43,6 +51,7 @@ import { AuthGuard } from './guards/auth.guard';
     RolesModule,
     AuthModule,
     AuthorityModule,
+    BatchModule,
   ],
   controllers: [AppController],
   providers: [

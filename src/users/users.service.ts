@@ -16,6 +16,7 @@ import { Role } from 'src/roles/role.entity';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import * as bcrypt from 'bcrypt';
 import { UserInfo } from 'src/userInfo/userInfo.entity';
+import { parseAlbanianDate } from 'src/shared/helper/transformDate';
 
 const scrypt = promisify(_scrypt) as (
   password: string,
@@ -163,6 +164,9 @@ export class UsersService {
       if (!user.userInfo) {
         user.userInfo = new UserInfo();
       }
+      if (userInfo.birthDate) {
+        userInfo.birthDate = parseAlbanianDate(userInfo.birthDate) as Date;
+      }
       Object.assign(user.userInfo, userInfo);
     }
     const updatedUser = await this.userRepository.save(user);
@@ -191,6 +195,4 @@ export class UsersService {
 
     return this.userRepository.save(user);
   }
-
- 
 }
