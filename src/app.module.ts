@@ -12,10 +12,17 @@ import { AuthModule } from './auth/auth.module';
 import { Authority } from './authority/authority.entity';
 import { UserInfo } from './userInfo/userInfo.entity';
 import { AuthorityModule } from './authority/authorities.module';
-import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from './guards/auth.guard';
+
 import { BullModule } from '@nestjs/bull';
 import { BatchModule } from './batch/batch.module';
+import { Department } from './departments/department.entity';
+import { Student } from './students/student.entity';
+import { University } from './universities/university.entity';
+import { DepartmentModule } from './departments/departments.module';
+import { UniversitiesModule } from './universities/universities.module';
+import { StudentsModule } from './students/students.module';
+import { Enrollment } from './enrollments/enrollment.entity';
+import { EnrollmentsModule } from './enrollments/enrollments.module';
 
 @Module({
   imports: [
@@ -30,17 +37,26 @@ import { BatchModule } from './batch/batch.module';
       },
     }),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule,BatchModule],
+      imports: [ConfigModule, BatchModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
+      useFactory: () => {
         return {
           type: 'postgres',
           host: 'localhost',
           port: 5432,
           username: 'postgres',
-          password: 'password',
+          password: 'sogetelpostgres',
           database: 'mydb',
-          entities: [User, Role, Authority, UserInfo],
+          entities: [
+            User,
+            Role,
+            Authority,
+            UserInfo,
+            University,
+            Department,
+            Student,
+            Enrollment,
+          ],
           synchronize: true,
         };
       },
@@ -49,6 +65,10 @@ import { BatchModule } from './batch/batch.module';
     UserModule,
     ReportsModule,
     RolesModule,
+    UniversitiesModule,
+    DepartmentModule,
+    StudentsModule,
+    EnrollmentsModule,
     AuthModule,
     AuthorityModule,
     BatchModule,

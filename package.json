@@ -34,6 +34,8 @@
     "class-validator": "^0.15.1",
     "cookie-session": "^2.1.1",
     "ioredis": "^5.10.1",
+    "pdf-lib": "^1.17.1",
+    "pdfkit": "^0.20.1",
     "pg": "^8.20.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
