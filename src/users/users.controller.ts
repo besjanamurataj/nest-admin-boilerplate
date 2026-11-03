@@ -26,6 +26,7 @@ import { ChangePasswordDto } from './dtos/change-password.dto';
 import { Public } from 'src/shared/decoratores/public.decorator';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { BatchService } from 'src/batch/batch.service';
+import { User } from './user.entity';
 
 @Controller('users')
 @Serialize(UserDto)
@@ -40,7 +41,7 @@ export class UsersController {
 
   @Post('/signup')
   @Public()
-  async signup(@Body() body: CreateUserDto) {
+  async signup(@Body() body: User):Promise<User> {
     const user = await this.authService.signup(body);
     return user;
   }

@@ -58,3 +58,12 @@ export class User {
   @JoinColumn()
   userInfo!: UserInfo;
 }
+
+export interface SessionData {
+  userId?: number;
+}
+
+export interface RequestWithCurrentUser extends Request {
+  session: SessionData;
+  currentUser?: User | null;
+}
