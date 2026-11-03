@@ -1,6 +1,11 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { BatchService } from 'src/batch/batch.service';
+import { User } from 'src/users/user.entity';
+interface AuthenticationResult {
+  user: User;
+  accessToken: string;
+}
 
 @Controller('auth')
 export class AuthController {
