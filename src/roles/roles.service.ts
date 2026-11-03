@@ -3,9 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import { Role } from './role.entity';
 import { CreateRoleDto } from './dtos/create-role.dto';
-import { User } from 'src/users/user.entity';
 import { UserResponseDto } from 'src/users/dtos/user-response.dto';
-import { GetUsersQueryDto } from 'src/users/dtos/get-user.dto';
 import { plainToInstance } from 'class-transformer';
 import { Authority } from 'src/authority/authority.entity';
 

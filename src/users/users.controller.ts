@@ -4,11 +4,9 @@ import {
   Delete,
   Get,
   Param,
-  Patch,
   Post,
   Query,
   NotFoundException,
-  Session,
   UseGuards,
   Res,
   UseInterceptors,
@@ -42,7 +40,7 @@ export class UsersController {
 
   @Post('/signup')
   @Public()
-  async signup(@Body() body: CreateUserDto, @Session() session: any) {
+  async signup(@Body() body: CreateUserDto) {
     const user = await this.authService.signup(body);
     return user;
   }

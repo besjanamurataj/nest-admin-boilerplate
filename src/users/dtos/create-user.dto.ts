@@ -1,10 +1,9 @@
-import { Exclude, Expose, Type } from 'class-transformer';
+import { Type } from 'class-transformer';
 import {
   IsArray,
   IsEmail,
   IsInt,
   IsNotEmpty,
-  IsNumber,
   IsOptional,
   IsString,
   MinLength,
@@ -19,7 +18,7 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsString()
   @MinLength(6)
-  password!: any;
+  password!: string;
   @IsNotEmpty()
   @IsString()
   name!: string;
