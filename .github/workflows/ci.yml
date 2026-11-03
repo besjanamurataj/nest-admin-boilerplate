@@ -92,8 +92,8 @@ jobs:
 
     steps:
       - name: Pull and restart backend
-        working-directory: /opt/base-nestjs
+        working-directory: /opt/base-react
         run: |
-          docker compose pull app
-          docker compose up -d app
+          docker compose pull app-nest
+          docker compose up -d app-nest
           docker image prune -f
