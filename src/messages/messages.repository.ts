@@ -1,25 +1,42 @@
 import { Injectable } from '@nestjs/common';
 import { readFile, writeFile } from 'fs/promises';
 
+interface Message {
+  id: number;
+  content: string;
+}
+
+type Messages = Record<string, Message>;
+
 @Injectable()
 export class MessagesRepository {
-  async findAll() {
-    const content = await readFile('src/messages.json', 'utf8');
-    const messages = JSON.parse(content);
-    return messages;
+  private readonly filePath = 'src/messages.json';
+
+  private async readMessages(): Promise<Messages> {
+    const content = await readFile(this.filePath, 'utf8');
+    return JSON.parse(content) as Messages;
   }
 
-  async findOne(id: string) {
-    const content = await readFile('src/messages.json', 'utf8');
-    const messages = JSON.parse(content);
+  async findAll(): Promise<Message[]> {
+    const messages = await this.readMessages();
+    return Object.values(messages);
+  }
+
+  async findOne(id: string): Promise<Message | undefined> {
+    const messages = await this.readMessages();
     return messages[id];
   }
 
-  async create(content: string) {
-    const contents = await readFile('src/messages.json', 'utf8');
-    const messages = JSON.parse(contents);
+  async create(content: string): Promise<Message> {
+    const messages = await this.readMessages();
+
     const id = Math.floor(Math.random() * 999);
-    messages[id] = { id, content };
-    await writeFile('src/messages.json', JSON.stringify(messages));
+    const message: Message = { id, content };
+
+    messages[id] = message;
+
+    await writeFile(this.filePath, JSON.stringify(messages, null, 2));
+
+    return message;
   }
 }
