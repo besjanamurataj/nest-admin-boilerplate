@@ -8,7 +8,7 @@ import { plainToClass } from 'class-transformer';
 import { map, Observable } from 'rxjs';
 import { UserDto } from 'src/users/dtos/user.dto';
 interface ClassConstructor {
-  new (...args: any[]): {};
+  new (...args: any[]);
 }
 
 export function Serialize(dto: ClassConstructor) {

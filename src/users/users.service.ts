@@ -6,7 +6,6 @@ import { CreateUserDto } from './dtos/create-user.dto';
 import { GetUsersQueryDto } from './dtos/get-user.dto';
 import { UserResponseDto } from './dtos/user-response.dto';
 import { plainToInstance } from 'class-transformer';
-import { scrypt as _scrypt } from 'crypto';
 import { Role } from 'src/roles/role.entity';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import * as bcrypt from 'bcrypt';
