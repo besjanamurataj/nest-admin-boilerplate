@@ -6,19 +6,12 @@ import { CreateUserDto } from './dtos/create-user.dto';
 import { GetUsersQueryDto } from './dtos/get-user.dto';
 import { UserResponseDto } from './dtos/user-response.dto';
 import { plainToInstance } from 'class-transformer';
-import { promisify } from 'util';
 import { scrypt as _scrypt } from 'crypto';
 import { Role } from 'src/roles/role.entity';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import * as bcrypt from 'bcrypt';
 import { UserInfo } from 'src/userInfo/userInfo.entity';
 import { parseAlbanianDate } from 'src/shared/helper/transformDate';
-
-const scrypt = promisify(_scrypt) as (
-  password: string,
-  salt: string,
-  keylen: number,
-) => Promise<Buffer>;
 
 @Injectable()
 export class UsersService {
