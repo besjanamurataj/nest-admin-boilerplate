@@ -2,18 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-
-interface AuthUser {
-  id: number;
-  email: string;
-  authorities: string[];
-}
-
-interface JwtPayload {
-  sub: string;
-  authorities: string[];
-  id: number;
-}
+import type {AuthUser,JwtPayload} from '../models/users.interface'
 
 @Injectable()
 export class AuthService {
