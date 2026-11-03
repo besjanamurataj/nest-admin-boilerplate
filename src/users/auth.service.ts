@@ -1,18 +1,12 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { promisify } from 'util';
-import { randomBytes, scrypt as _scrypt } from 'crypto';
-import * as bcrypt from 'bcrypt';
-const scrypt = promisify(_scrypt);
+import { scrypt as _scrypt } from 'crypto';
+
 @Injectable()
 export class AuthService {
   constructor(private usersService: UsersService) {}
   async signup(body: any) {
-    const { email, password } = body;
+    const { email } = body;
 
     const userExists = await this.usersService.find(email);
     if (userExists) {
