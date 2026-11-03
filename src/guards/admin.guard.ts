@@ -1,14 +1,16 @@
-import { CanActivate, ExecutionContext } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 
+interface AuthenticatedRequest {
+  currentUser?: {
+    admin: boolean;
+  };
+}
+
+@Injectable()
 export class AdminGuard implements CanActivate {
-  canActivate(context: ExecutionContext) {
-    const request = context.switchToHttp().getRequest();
-    if (!request.currentUser) {
-      return false;
-    }
-    if (request.currentUser.admin) {
-      return true;
-    }
-    return request.currentUser.admin;
+  canActivate(context: ExecutionContext): boolean {
+    const request = context.switchToHttp().getRequest<AuthenticatedRequest>();
+
+    return request.currentUser?.admin === true;
   }
 }
