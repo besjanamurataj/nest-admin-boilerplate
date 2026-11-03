@@ -1,0 +1,14 @@
+# Keep the build context small and keep local files out of the image
+node_modules/
+dist/
+coverage/
+test/
+.git/
+.github/
+.vscode/
+.idea/
+# Never bake environment files (and their secrets) into the image
+.env*
+Dockerfile
+.dockerignore
+README.md

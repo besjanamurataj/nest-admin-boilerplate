@@ -30,23 +30,28 @@ import { EnrollmentsModule } from './enrollments/enrollments.module';
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
-    BullModule.forRoot({
-      redis: {
-        host: 'localhost',
-        port: 6379,
-      },
+    // Connection settings come from environment variables (same names as base-springboot);
+    // the defaults are the local development values
+    BullModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        redis: {
+          host: config.get<string>('REDIS_HOST', 'localhost'),
+          port: Number(config.get('REDIS_PORT', 6379)),
+        },
+      }),
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule, BatchModule],
       inject: [ConfigService],
-      useFactory: () => {
+      useFactory: (config: ConfigService) => {
         return {
           type: 'postgres',
-          host: 'localhost',
-          port: 5432,
-          username: 'postgres',
-          password: 'sogetelpostgres',
-          database: 'mydb',
+          host: config.get<string>('DB_SERVER_IP', 'localhost'),
+          port: Number(config.get('DB_PORT', 5432)),
+          username: config.get<string>('DB_USERNAME', 'postgres'),
+          password: config.get<string>('DB_PASSWORD', 'sogetelpostgres'),
+          database: config.get<string>('DB_NAME', 'mydb'),
           entities: [
             User,
             Role,
