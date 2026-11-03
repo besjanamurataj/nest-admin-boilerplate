@@ -7,6 +7,13 @@ import { UserResponseDto } from 'src/users/dtos/user-response.dto';
 import { plainToInstance } from 'class-transformer';
 import { Authority } from 'src/authority/authority.entity';
 
+interface RoleQuery {
+  number?: string;
+  size?: string;
+  sort?: string;
+  search?: string;
+}
+
 @Injectable()
 export class RolesService {
   constructor(
@@ -35,29 +42,30 @@ export class RolesService {
     return await this.roleRepository.save(role);
   }
 
-  async findAll(query: any) {
-    const { number = '1', size = '5', sort } = query;
+  async findAll(query: RoleQuery) {
+    const { number = '1', size = '5', sort, search } = query;
 
-    const page = parseInt(number);
-    const limit = parseInt(size);
+    const page = Number.parseInt(number, 10);
+    const limit = Number.parseInt(size, 10);
     const skip = (page - 1) * limit;
 
     const qb = this.roleRepository
       .createQueryBuilder('role')
       .leftJoinAndSelect('role.authorities', 'authority');
 
-    if (query.search) {
+    if (search) {
       qb.where('role.name ILIKE :search', {
-        search: `%${query.search}%`,
+        search: `%${search}%`,
       });
     }
 
     if (sort) {
       const [field, order] = sort.split(',');
-      qb.orderBy(
-        `role.${field}`,
-        (order?.toUpperCase() as 'ASC' | 'DESC') || 'ASC',
-      );
+
+      const sortOrder: 'ASC' | 'DESC' =
+        order?.toUpperCase() === 'DESC' ? 'DESC' : 'ASC';
+
+      qb.orderBy(`role.${field}`, sortOrder);
     } else {
       qb.orderBy('role.id', 'DESC');
     }
