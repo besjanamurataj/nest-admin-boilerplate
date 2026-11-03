@@ -1,6 +1,6 @@
-import { InjectRepository } from "@nestjs/typeorm";
-import { Authority } from "./authority.entity";
-import { Repository } from "typeorm";
+import { InjectRepository } from '@nestjs/typeorm';
+import { Authority } from './authority.entity';
+import { Repository } from 'typeorm';
 
 export class AuthorityService {
   constructor(

@@ -9,13 +9,14 @@ import { BatchModule } from 'src/batch/batch.module';
 @Module({
   providers: [AuthService],
   controllers: [AuthController],
-  imports: [UserModule,BatchModule,
+  imports: [
+    UserModule,
+    BatchModule,
     JwtModule.register({
       secret: JWT_SECRET,
       signOptions: { expiresIn: '1d' },
       global: true,
-    })
+    }),
   ],
-
 })
 export class AuthModule {}

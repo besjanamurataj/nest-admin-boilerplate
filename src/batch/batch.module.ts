@@ -4,7 +4,6 @@ import { BullModule } from '@nestjs/bull';
 import { UserInfo } from 'src/userInfo/userInfo.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-
 @Module({
   imports: [
     BullModule.registerQueue({

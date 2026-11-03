@@ -20,8 +20,8 @@ import { StudentPdfService } from './student-pdf.service';
 export class StudentsController {
   constructor(
     private readonly studentsService: StudentService,
-    private readonly studentPdfService: StudentPdfService
-  ) { }
+    private readonly studentPdfService: StudentPdfService,
+  ) {}
 
   @Post()
   createStudent(@Body() body: CreateStudentDto) {

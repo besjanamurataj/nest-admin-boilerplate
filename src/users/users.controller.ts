@@ -45,8 +45,6 @@ export class UsersController {
     return user;
   }
 
-
-
   @Public()
   @Post()
   async createUser(@Body() body: CreateUserDto) {

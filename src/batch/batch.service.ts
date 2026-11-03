@@ -16,7 +16,7 @@ export class BatchService {
 
   async checkBirthdays() {
     const today = new Date();
-    const month = today.getMonth() + 1; 
+    const month = today.getMonth() + 1;
     const day = today.getDate();
     const users = await this.userInfoRepository
       .createQueryBuilder('userInfo')

@@ -9,7 +9,7 @@ import { UserInfo } from 'src/userInfo/userInfo.entity';
 import { BatchModule } from 'src/batch/batch.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Role, UserInfo]),BatchModule],
+  imports: [TypeOrmModule.forFeature([User, Role, UserInfo]), BatchModule],
   providers: [UsersService, AuthService],
   controllers: [UsersController],
   exports: [UsersService],

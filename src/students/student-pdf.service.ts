@@ -22,7 +22,6 @@ type StudentPdfData = {
 @Injectable()
 export class StudentPdfService {
   async generateStudentsPdf(students: StudentPdfData[]): Promise<Buffer> {
-   
     const pdfDocument = await PDFDocument.create();
     const regularFont = await pdfDocument.embedFont(StandardFonts.Helvetica);
     const boldFont = await pdfDocument.embedFont(StandardFonts.HelveticaBold);

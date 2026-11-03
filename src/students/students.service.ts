@@ -14,7 +14,7 @@ export class StudentService {
 
     @InjectRepository(Department)
     private readonly departmentRepository: Repository<Department>,
-  ) { }
+  ) {}
 
   async create(body: CreateStudentDto) {
     const { departmentId, ...studentData } = body;
@@ -349,5 +349,4 @@ export class StudentService {
       departmentName: student.department.name,
     }));
   }
-
 }

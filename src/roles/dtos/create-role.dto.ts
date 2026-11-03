@@ -11,8 +11,7 @@ export class CreateRoleDto {
 
   @IsOptional()
   @IsArray()
-    @IsInt({ each: true })
+  @IsInt({ each: true })
   @Type(() => Number)
   authorities?: string[];
-  
 }

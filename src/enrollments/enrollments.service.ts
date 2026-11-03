@@ -242,12 +242,8 @@ export class EnrollmentService {
       throw new NotFoundException('Enrollment not found');
     }
 
-    const {
-      universityId,
-      departmentId,
-      studentId,
-      ...enrollmentData
-    } = attributes;
+    const { universityId, departmentId, studentId, ...enrollmentData } =
+      attributes;
 
     Object.assign(enrollment, enrollmentData);
 

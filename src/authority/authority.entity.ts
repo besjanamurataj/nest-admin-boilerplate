@@ -1,13 +1,5 @@
 import { Role } from 'src/roles/role.entity';
-import {
-  Column,
-  Entity,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Authority {
