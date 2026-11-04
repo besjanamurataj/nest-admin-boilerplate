@@ -1,11 +1,55 @@
 import { Injectable } from '@nestjs/common';
 import PDFDocument from 'pdfkit';
 
+interface PdfTextOptions {
+  align?: 'left' | 'center' | 'right' | 'justify';
+  width?: number;
+}
+
+interface PdfPageOptions {
+  margin?: number;
+  size?: string;
+  layout?: 'portrait' | 'landscape';
+}
+
+// pdfkit does not ship TypeScript declarations, so describe the subset we use.
+interface PdfDocument {
+  y: number;
+  on(event: 'data', listener: (chunk: Buffer) => void): this;
+  on(event: 'end', listener: () => void): this;
+  on(event: 'error', listener: (error: Error) => void): this;
+  font(name: string): this;
+  fontSize(size: number): this;
+  text(text: string, options?: PdfTextOptions): this;
+  text(text: string, x?: number, y?: number, options?: PdfTextOptions): this;
+  moveDown(lines?: number): this;
+  moveTo(x: number, y: number): this;
+  lineTo(x: number, y: number): this;
+  stroke(): this;
+  addPage(options?: PdfPageOptions): this;
+  end(): void;
+}
+
+type PdfDocumentConstructor = new (options?: PdfPageOptions) => PdfDocument;
+
+const PdfKitDocument = PDFDocument as PdfDocumentConstructor;
+
+export interface EnrollmentPdfRow {
+  id?: number | null;
+  enrollmentDate?: string | null;
+  universityName?: string | null;
+  departmentName?: string | null;
+  studentFirstName?: string | null;
+  studentLastName?: string | null;
+}
+
 @Injectable()
 export class EnrollmentPdfService {
-  async generateEnrollmentsPdf(enrollments: any[]): Promise<Buffer> {
+  async generateEnrollmentsPdf(
+    enrollments: EnrollmentPdfRow[],
+  ): Promise<Buffer> {
     return new Promise((resolve, reject) => {
-      const doc = new PDFDocument({
+      const doc = new PdfKitDocument({
         margin: 30,
         size: 'A4',
         layout: 'landscape',
