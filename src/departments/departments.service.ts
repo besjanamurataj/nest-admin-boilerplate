@@ -5,6 +5,13 @@ import { Department } from './department.entity';
 import { University } from 'src/universities/university.entity';
 import { CreateDepartmentDto } from './dto/create-department.dto';
 
+interface DepartmentQuery {
+  number?: string;
+  size?: string;
+  sort?: string;
+  search?: string;
+}
+
 @Injectable()
 export class DepartmentService {
   constructor(
@@ -43,7 +50,7 @@ export class DepartmentService {
     };
   }
 
-  async findAll(query: any) {
+  async findAll(query: DepartmentQuery) {
     const { number = '1', size = '5', sort, search } = query;
 
     const page = parseInt(number, 10);

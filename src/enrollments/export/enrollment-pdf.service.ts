@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import PDFDocument from 'pdfkit';
+import { EnrollmentExportRow } from './enrollment-export-row.interface';
 
 interface PdfTextOptions {
   align?: 'left' | 'center' | 'right' | 'justify';
@@ -34,19 +35,10 @@ type PdfDocumentConstructor = new (options?: PdfPageOptions) => PdfDocument;
 
 const PdfKitDocument = PDFDocument as PdfDocumentConstructor;
 
-export interface EnrollmentPdfRow {
-  id?: number | null;
-  enrollmentDate?: string | null;
-  universityName?: string | null;
-  departmentName?: string | null;
-  studentFirstName?: string | null;
-  studentLastName?: string | null;
-}
-
 @Injectable()
 export class EnrollmentPdfService {
   async generateEnrollmentsPdf(
-    enrollments: EnrollmentPdfRow[],
+    enrollments: EnrollmentExportRow[],
   ): Promise<Buffer> {
     return new Promise((resolve, reject) => {
       const doc = new PdfKitDocument({

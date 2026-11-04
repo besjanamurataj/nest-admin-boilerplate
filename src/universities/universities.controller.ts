@@ -10,6 +10,7 @@ import {
   Query,
   Res,
 } from '@nestjs/common';
+import type { Response } from 'express';
 import { UniversityService } from './universities.service';
 import { GetUsersQueryDto } from 'src/users/dtos/get-user.dto';
 import { CreateUniversityDto } from './dto/create-university.dto';
@@ -35,7 +36,7 @@ export class UniversityController {
   }
 
   @Get()
-  findAll(@Query() query: GetUsersQueryDto, @Res() res) {
+  findAll(@Query() query: GetUsersQueryDto, @Res() res: Response) {
     return this.universityService.findAll(query).then((universities) => {
       res.json(universities);
     });

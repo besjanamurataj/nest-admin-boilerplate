@@ -10,6 +10,7 @@ import {
   Query,
   Res,
 } from '@nestjs/common';
+import type { Response } from 'express';
 import { CreateRoleDto } from './dtos/create-role.dto';
 import { RolesService } from './roles.service';
 import { GetUsersQueryDto } from 'src/users/dtos/get-user.dto';
@@ -20,7 +21,7 @@ export class RolesController {
 
   @Post('')
   createRole(@Body() body: CreateRoleDto) {
-    this.rolesService.create(body);
+    return this.rolesService.create(body);
   }
 
   @Get('/:id')
@@ -33,7 +34,7 @@ export class RolesController {
   }
 
   @Get()
-  findAll(@Query() query: GetUsersQueryDto, @Res() res) {
+  findAll(@Query() query: GetUsersQueryDto, @Res() res: Response) {
     return this.rolesService.findAll(query).then((roles) => {
       res.json(roles);
     });

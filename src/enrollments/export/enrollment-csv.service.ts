@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import { EnrollmentExportRow } from './enrollment-export-row.interface';
+
+type CsvValue = string | number | null | undefined;
 
 @Injectable()
 export class EnrollmentCsvService {
-  generateEnrollmentsCsv(enrollments: any[]): Buffer {
+  generateEnrollmentsCsv(enrollments: EnrollmentExportRow[]): Buffer {
     const headers = [
       'ID',
       'Enrollment Date',
@@ -12,7 +15,7 @@ export class EnrollmentCsvService {
       'Student Last Name',
     ];
 
-    const rows = enrollments.map((enrollment) => [
+    const rows = enrollments.map((enrollment): CsvValue[] => [
       enrollment.id,
       `="${enrollment.enrollmentDate}"`,
       enrollment.universityName,
@@ -31,7 +34,7 @@ export class EnrollmentCsvService {
     return Buffer.from(csvContent, 'utf-8');
   }
 
-  private escapeCsvValue(value: unknown): string {
+  private escapeCsvValue(value: CsvValue): string {
     if (value === null || value === undefined) {
       return '';
     }

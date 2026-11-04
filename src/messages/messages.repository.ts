@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { readFile, writeFile } from 'fs/promises';
 
-interface Message {
+export interface Message {
   id: number;
   content: string;
 }

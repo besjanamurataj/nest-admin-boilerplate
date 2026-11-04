@@ -10,6 +10,7 @@ import {
   Query,
   Res,
 } from '@nestjs/common';
+import type { Response } from 'express';
 import { GetUsersQueryDto } from 'src/users/dtos/get-user.dto';
 import { DepartmentService } from './departments.service';
 import { CreateDepartmentDto } from './dto/create-department.dto';
@@ -35,7 +36,7 @@ export class DepartmentController {
   }
 
   @Get()
-  findAll(@Query() query: GetUsersQueryDto, @Res() res) {
+  findAll(@Query() query: GetUsersQueryDto, @Res() res: Response) {
     return this.departmentService.findAll(query).then((departments) => {
       res.json(departments);
     });

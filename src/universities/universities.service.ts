@@ -4,6 +4,13 @@ import { Repository } from 'typeorm';
 import { University } from './university.entity';
 import { CreateUniversityDto } from './dto/create-university.dto';
 
+interface UniversityQuery {
+  number?: string;
+  size?: string;
+  sort?: string;
+  search?: string;
+}
+
 @Injectable()
 export class UniversityService {
   constructor(
@@ -17,7 +24,7 @@ export class UniversityService {
     return await this.universityRepository.save(university);
   }
 
-  async findAll(query: any) {
+  async findAll(query: UniversityQuery) {
     const { number = '1', size = '5', sort, search } = query;
 
     const page = parseInt(number, 10);

@@ -15,6 +15,7 @@ import {
   BadRequestException,
   Req,
 } from '@nestjs/common';
+import type { Response } from 'express';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from 'src/users/dtos/update-user.dto';
@@ -27,7 +28,7 @@ import { Public } from 'src/shared/decoratores/public.decorator';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { BatchService } from 'src/batch/batch.service';
 import { User } from './user.entity';
-import { AuthenticatedRequest } from '../models/authenticated-request.interface';
+import type { AuthenticatedRequest } from '../models/authenticated-request.interface';
 
 @Controller('users')
 @Serialize(UserDto)
@@ -58,14 +59,20 @@ export class UsersController {
   }
 
   @Get()
-  findAll(@Query() query: GetUsersQueryDto, @Res() res): Promise<User> {
+  findAll(
+    @Query() query: GetUsersQueryDto,
+    @Res() res: Response,
+  ): Promise<Response> {
     return this.usersService.findAll(query).then((result) => {
       return res.json(result);
     });
   }
 
   @Put('change-password')
-  changePassword(@Body() dto: ChangePasswordDto, @Req() req) {
+  changePassword(
+    @Body() dto: ChangePasswordDto,
+    @Req() req: AuthenticatedRequest,
+  ) {
     if (dto.password !== dto.confirmPassword) {
       throw new BadRequestException("Password don't match");
     }
@@ -73,7 +80,7 @@ export class UsersController {
   }
 
   @Put('')
-  updateProfile(@Body() dto: UpdateUserDto, @Req() req) {
+  updateProfile(@Body() dto: UpdateUserDto, @Req() req: AuthenticatedRequest) {
     return this.usersService.update(req.user.userId, dto);
   }
 
