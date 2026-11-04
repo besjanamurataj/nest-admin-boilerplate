@@ -12,7 +12,6 @@ import { AuthModule } from './auth/auth.module';
 import { Authority } from './authority/authority.entity';
 import { UserInfo } from './userInfo/userInfo.entity';
 import { AuthorityModule } from './authority/authorities.module';
-
 import { BullModule } from '@nestjs/bull';
 import { BatchModule } from './batch/batch.module';
 import { Department } from './departments/department.entity';
@@ -23,12 +22,13 @@ import { UniversitiesModule } from './universities/universities.module';
 import { StudentsModule } from './students/students.module';
 import { Enrollment } from './enrollments/enrollment.entity';
 import { EnrollmentsModule } from './enrollments/enrollments.module';
+import { StartupModule } from './auth/configs/startup.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: `.env.${process.env.NODE_ENV}`,
+      envFilePath: `.env.${process.env.NODE_ENV || 'development'}`,
     }),
     // Connection settings come from environment variables (same names as base-springboot);
     // the defaults are the local development values
@@ -42,7 +42,7 @@ import { EnrollmentsModule } from './enrollments/enrollments.module';
       }),
     }),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule, BatchModule],
+      imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
         return {
@@ -50,7 +50,7 @@ import { EnrollmentsModule } from './enrollments/enrollments.module';
           host: config.get<string>('DB_SERVER_IP', 'localhost'),
           port: Number(config.get('DB_PORT', 5432)),
           username: config.get<string>('DB_USERNAME', 'postgres'),
-          password: config.get<string>('DB_PASSWORD', 'sogetelpostgres'),
+          password: config.get<string>('DB_PASSWORD', 'password'),
           database: config.get<string>('DB_NAME', 'mydb'),
           entities: [
             User,
@@ -77,6 +77,7 @@ import { EnrollmentsModule } from './enrollments/enrollments.module';
     AuthModule,
     AuthorityModule,
     BatchModule,
+    StartupModule,
   ],
   controllers: [AppController],
   providers: [

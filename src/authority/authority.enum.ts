@@ -1,0 +1,6 @@
+export enum AuthorityEnum {
+  VIEW_USER = 'VIEW_USER',
+  VIEW_ROLE = 'VIEW_ROLE',
+  MANAGE_USER = 'MANAGE_USER',
+  MANAGE_ROLE = 'MANAGE_ROLE',
+}
