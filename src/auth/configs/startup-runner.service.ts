@@ -38,7 +38,7 @@ export class StartupRunnerService implements OnApplicationBootstrap {
             authorityRepository.create({ name: authorityName }),
           );
 
-          this.logger.log(`Authority ${authorityName} added`);
+          console.log(`Authority ${authorityName} added`);
         }
       }
 
@@ -103,6 +103,7 @@ export class StartupRunnerService implements OnApplicationBootstrap {
       );
 
       const roleWithAllAuthorities = await roleRepository.save(adminRole);
+      console.log(roleWithAllAuthorities, 'roleWithAllAuthorities');
 
       // 4. Create default admin user
       const existingAdmin = await userRepository.findOne({
