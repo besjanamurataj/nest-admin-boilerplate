@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { BatchService } from 'src/batch/batch.service';
 
-@Controller('/api/auth')
+@Controller('/auth')
 export class AuthController {
   constructor(
     private authService: AuthService,
