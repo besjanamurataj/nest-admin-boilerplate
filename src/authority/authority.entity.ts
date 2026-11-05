@@ -8,5 +8,5 @@ export class Authority {
   @Column()
   name!: string;
   @ManyToMany(() => Role, (role) => role.authorities, { onDelete: 'CASCADE' })
-  role!: Role[];
+  roles!: Role[];
 }

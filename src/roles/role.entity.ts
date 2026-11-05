@@ -24,8 +24,8 @@ export class Role {
   @Exclude()
   @ManyToMany(() => User, (user) => user.roles)
   users!: User[];
-
-  @ManyToMany(() => Authority, (authority) => authority.role)
+  @Expose()
+  @ManyToMany(() => Authority, (authority) => authority.roles)
   @JoinTable()
   authorities!: Authority[];
 }

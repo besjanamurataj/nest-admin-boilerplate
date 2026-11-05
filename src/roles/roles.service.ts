@@ -31,6 +31,7 @@ export class RolesService {
       authorityEntities = await this.authorityRepository.find({
         where: {
           id: In(authorities),
+          
         },
       });
     }
